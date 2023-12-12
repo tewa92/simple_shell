@@ -112,8 +112,9 @@ return (built_in_ret);
 */
 void find_cmd(info_t *inform)
 {
-char *command_path = NULL;
-int argument_count = 0;
+char *path = NULL;
+int argument_count;
+int index;
 
 inform->path = inform->argv[0];
 
@@ -123,7 +124,7 @@ inform->line_count++;
 inform->linecount_flag = 0;
 }
 
-for (int index = 0; inform->arg[index]; index++)
+for ( index = 0, argument_count = 0; inform->arg[index]; index++)
 {
 if (!is_delim(inform->arg[index], " \t\n"))
 argument_count++;
@@ -132,20 +133,19 @@ argument_count++;
 if (!argument_count)
 return;
 
-command_path = find_command_path(inform, _getenv(inform, "PATH="), inform->argv[0]);
+path = find_path(inform, _getenv(inform, "PATH="), inform->argv[0]);
 
-if (command_path)
+if (path)
 {
-inform->path = command_path;
-fork_and_execute_command(inform);
+inform->path = path;
+fork_cmd(inform);
 }
 else
 {
 if ((interactive(inform) || _getenv(inform, "PATH=") || inform->argv[0][0] == '/') &&
 is_cmd(inform, inform->argv[0]))
-{
-fork_and_execute_command(inform);
-}
+fork_cmd(inform);
+
 else if (*(inform->arg) != '\n')
 {
 inform->status = 127;

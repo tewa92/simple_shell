@@ -23,7 +23,7 @@ if (!delimiters)
 delimiters = " ";
 
 for (idx = 0; str[idx] != '\0'; idx++)
-if (!is_delimiter(str[idx], delimiters) && (is_delimiter(str[idx + 1], delimiters) || !str[idx + 1]))
+if (!is_delim(str[idx], delimiters) && (is_delim(str[idx + 1], delimiters) || !str[idx + 1]))
 num_words++;
 
 if (num_words == 0)
@@ -35,11 +35,11 @@ return (NULL);
 
 for (idx = 0, word_idx = 0; word_idx < num_words; word_idx++)
 {
-while (is_delimiter(str[idx], delimiters))
+while (is_delim(str[idx], delimiters))
 idx++;
 
 char_idx = 0;
-while (!is_delimiter(str[idx + char_idx], delimiters) && str[idx + char_idx])
+while (!is_delim(str[idx + char_idx], delimiters) && str[idx + char_idx])
 char_idx++;
 
 result[word_idx] = malloc((char_idx + 1) * sizeof(char));

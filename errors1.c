@@ -165,7 +165,7 @@ char *convert_number(long int number, int radix, int conversion_flags)
 	 * storing the remainder as a character in the buffer.
 	 */
 	do {
-		*--potr = array[n % radix];
+		*--potr = array[m % radix];
 		m /= radix;
 	} while (m != 0);
 

@@ -51,8 +51,8 @@ int _myexit(info_t *inform)
  */
 int _mycd(info_t *inform)
 {
-	char *st, *direct, buffer[1024];
-	int chdirect_ret;
+	char *st, *dir, buffer[1024];
+	int chdir_ret;
 
 	/* Get the current working directory */
 	st = getcwd(buffer, 1024);
@@ -68,12 +68,12 @@ int _mycd(info_t *inform)
 	if (!inform->argv[1])
 	{
 	/* Get the HOME directory and change to it, or use "/" if HOME is not set */
-	direct = _getenv(inform, "HOME=");
-	if (!direct)
-	chdirect_ret = /* TODO: what should this be? */
-	chdirect((direct = _getenv(inform, "PWD=")) ? direct : "/");
+	dir = _getenv(inform, "HOME=");
+	if (!dir)
+	chdir_ret = /* TODO: what should this be? */
+	chdir((dir = _getenv(inform, "PWD=")) ? dir : "/");
 	else
-		chdirect_ret = chdirect(direct);
+		chdir_ret = chdir(dir);
 	}
 	/* If the argument is "-", change to the previous working directory */
 	else if (_strcmp(inform->argv[1], "-") == 0)
@@ -87,17 +87,17 @@ int _mycd(info_t *inform)
 
 	/* Print the previous working directory and change to it */
 	_puts(_getenv(inform, "OLDPWD=")), _putchar('\n');
-	chdirect_ret = /* TODO: what should this be? */
-		chdirect((direct = _getenv(inform, "OLDPWD=")) ? direct : "/");
+	chdir_ret = /* TODO: what should this be? */
+		chdir((dir = _getenv(inform, "OLDPWD=")) ? dir : "/");
 	}
 
 	/* Change to the specified directory */
 
 	else
-		chdirect_ret = chdirect(inform->argv[1]);
+		chdir_ret = chdir(inform->argv[1]);
 
 	/* Handle errors if chdirect fails */
-	if (chdirect_ret == -1)
+	if (chdir_ret == -1)
 
 	{
 		print_error(inform, "can't cd to ");
@@ -112,7 +112,7 @@ int _mycd(info_t *inform)
 
 	/* Return 0 on successful directory change, 1 on error */
 
-	return (chdirect_ret == -1 ? 1 : 0);
+	return (chdir_ret == -1 ? 1 : 0);
 } /* End of _mycd function */
 
 
@@ -133,11 +133,10 @@ int _myhelp(info_t *inform)
 	/**
 	 * Display a message indicating that the function is not
 	 * implemented yet
-	 * /
+	 */
 	_puts("Assistance request is functional, but function has not been work.\n");
 
 
-	/* Temporary workaround to avoid "unused variable"warning*/
 	if (0)
 		_puts(*arg_array); /* temp att_unused workaround */
 

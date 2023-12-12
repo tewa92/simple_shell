@@ -50,7 +50,7 @@ char **list_to_strings(list_t *list_head)
 		if (!str)
 		{
 			for (h = 0; h < a; h++)
-				free(strings[h])j;
+				free(strings[h]);
 			free(strings);
 			return (NULL);
 		}

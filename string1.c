@@ -71,7 +71,7 @@ return;
 
 while (output_string[index] != '\0')
 {
-print_character(output_string[index]);
+_putchar(output_string[index]);
 index++;
 }
 }
