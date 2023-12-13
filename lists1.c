@@ -104,7 +104,8 @@ size_t print_list(const list_t *list_head)
  *
  * Return: Pointer to the first matching node or NULL if not found.
  */
-list_t *node_starts_with(list_t *list_node, char *search_prefix, char search_char)
+list_t *node_starts_with(list_t *list_node, char *search_prefix,
+		char search_char)
 {
 	char *result_str = NULL;
 

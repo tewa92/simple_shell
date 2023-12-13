@@ -43,7 +43,8 @@ char *dup_chars(char *source_str, int start_index, int stop_index)
 	static char buffer[1024];
 	int index_buffer = 0, source_index = 0;
 
-	for (index_buffer = 0, source_index = start_index; source_index < stop_index; source_index++)
+	for (index_buffer = 0, source_index = start_index;
+			source_index < stop_index; source_index++)
 	{
 		if (source_str[source_index] != ':')
 			buffer[index_buffer++] = source_str[source_index];

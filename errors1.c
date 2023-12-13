@@ -156,7 +156,8 @@ char *convert_number(long int number, int radix, int conversion_flags)
 	 * Set the array for digits based on the case (lowercase or uppercase).
 	 * Initialize the pointer to the end of the buffer.
 	 */
-	array = conversion_flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	array = conversion_flags & CONVERT_LOWERCASE ? "0123456789abcdef"
+		: "0123456789ABCDEF";
 	potr = &buffer[49];
 	*potr = '\0';
 
