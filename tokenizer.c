@@ -33,7 +33,7 @@ char **strtow(char *str, char *delimiters)
 	{
 		while (is_delim(str[idx], delimiters))
 			idx++;
-			char_idx = 0;
+		char_idx = 0;
 		while (!is_delim(str[idx + char_idx], delimiters) && str[idx + char_idx])
 			char_idx++;
 		result[word_idx] = malloc((char_idx + 1) * sizeof(char));
@@ -41,12 +41,12 @@ char **strtow(char *str, char *delimiters)
 			{
 				for (copy_idx = 0; copy_idx < word_idx; copy_idx++)
 					free(result[copy_idx]);
-					free(result);
-					return (NULL);
+				free(result);
+				return (NULL);
 			}
 		for (copy_idx = 0; copy_idx < char_idx; copy_idx++)
 			result[word_idx][copy_idx] = str[idx++];
-			result[word_idx][copy_idx] = 0;
+		result[word_idx][copy_idx] = 0;
 	}
 	result[word_idx] = NULL;
 	return (result);
