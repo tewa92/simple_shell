@@ -56,13 +56,13 @@ void set_info(info_t *inform, char **avec)
 * @inform: Pointer to the information structure.
 * @whole: Flag indicating whether to free all associated memory.
 */
-void free_info(info_t *inform, int whole)
+void free_info(info_t *inform, int all)
 {
 	ffree(inform->argv);
 	inform->argv = NULL;
 	inform->path = NULL;
 
-	if (whole)
+	if (all)
 	{
 		if (!inform->cmd_buf)
 			free(inform->arg);
