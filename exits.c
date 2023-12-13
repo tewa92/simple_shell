@@ -58,6 +58,7 @@ char *_strncat(char *destin, char *srce, int m)
 
 	/*Find the end of the destination string.*/
 	p = 0;
+	t = 0;
 	while (destin[p] != '\0')
 		p++;
 
@@ -66,7 +67,7 @@ char *_strncat(char *destin, char *srce, int m)
 	 * Stop concatenating if the end of the source string is reached or
 	 * the maximum number of characters is reached.
 	 */
-	t = 0;
+
 	while (srce[t] != '\0' && t < m)
 	{
 		destin[p] = srce[t];
