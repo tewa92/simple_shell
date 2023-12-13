@@ -12,15 +12,13 @@
  */
 int _strlen(char *str)
 {
-  int length = 0;
+	int length = 0;
 
-  if (!str)
-    return (0);
-
-  while (*str++)
-    length++;
-
-  return (length);
+	if (!str)
+		return (0);
+	while (*str++)
+		length++;
+	return (length);
 }
 
 
@@ -39,18 +37,18 @@ int _strlen(char *str)
  */
 int _strcmp(char *str1, char *str2)
 {
-  while (*str1 && *str2)
-  {
-    if (*str1 != *str2)
-      return (*str1 - *str2);
-    str1++;
-    str2++;
-  }
+	while (*str1 && *str2)
+	{
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
+	}
 
-  if (*str1 == *str2)
-    return (0);
-  else
-    return (*str1 < *str2 ? -1 : 1);
+	if (*str1 == *str2)
+		return (0);
+	else
+		return (*str1 < *str2 ? -1 : 1);
 }
 
 
@@ -68,10 +66,10 @@ int _strcmp(char *str1, char *str2)
  */
 char *starts_with(const char *str, const char *prefix)
 {
-  while (*prefix)
-    if (*prefix++ != *str++)
-      return (NULL);
-  return ((char *)str);
+	while (*prefix)
+		if (*prefix++ != *str++)
+			return (NULL);
+	return ((char *)str);
 }
 
 /**
@@ -86,13 +84,12 @@ char *starts_with(const char *str, const char *prefix)
  */
 char *_strcat(char *destination, char *source)
 {
-  char *result = destination;
+	char *result = destination;
 
-  while (*destination)
-    destination++;
-  while (*source)
-    *destination++ = *source++;
-  *destination = *source;
-
-  return (result);
+	while (*destination)
+	destination++;
+	while (*source)
+		*destination++ = *source++;
+	*destination = *source;
+	return (result);
 }
