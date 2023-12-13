@@ -38,7 +38,7 @@ int write_history(info_t *inform)
 {
 	ssize_t filedesc;
 	char *filename = get_history_file(inform);
-	list_t *alias_node = NULL;
+	list_t *node = NULL;
 
 	if (!filename)
 		return (-1);
@@ -49,9 +49,9 @@ int write_history(info_t *inform)
 	if (filedesc == -1)
 		return (-1);
 
-	for (alias_node = inform->history; alias_node; alias_node = alias_node->next)
+	for (node = inform->history; node; node = node->next)
 	{
-		_putsfd(alias_node->str, filedesc);
+		_putsfd(node->str, filedesc);
 		_putfd('\n', filedesc);
 	}
 
@@ -137,15 +137,15 @@ int read_history(info_t *inform)
  */
 int build_history_list(info_t *inform, char *buff, int linecount)
 {
-	list_t *alias_node = NULL;
+	list_t *node = NULL;
 
 	if (inform->history)
-		alias_node = inform->history;
+		node = inform->history;
 
-	add_node_end(&alias_node, buff, linecount);
+	add_node_end(&node, buff, linecount);
 
 	if (!inform->history)
-		inform->history = alias_node;
+		inform->history = node;
 
 	return (0);
 }
@@ -159,13 +159,13 @@ int build_history_list(info_t *inform, char *buff, int linecount)
  */
 int renumber_history(info_t *inform)
 {
-	list_t *alias_node = inform->history;
+	list_t *node = inform->history;
 	int linecount = 0;
 
-	while (alias_node)
+	while (node)
 	{
-		alias_node->num = linecount++;
-		alias_node = alias_node->next;
+		node->num = linecount++;
+		node = node->next;
 	}
 
 	return (inform->histcount = linecount);
