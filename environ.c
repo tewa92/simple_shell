@@ -30,21 +30,21 @@ int _myenv(info_t *inform)
  */
 char *_getenv(info_t *inform, const char *names)
 {
-	list_t *alias_node = inform->env;
+	list_t *node = inform->env;
 	char *k;
 
 	/* Iterate through the linked list of environment variables */
-	while (alias_node)
+	while (node)
 	{
 		/* Check if the value of the current node starts with the specified name */
-		k = starts_with(alias_node->str, names);
+		k = starts_with(node->str, names);
 
 		/* If a match is found and the value is not empty, return the value */
 		if (k && *k)
 			return (k);
 
 		/* Move to the next node in the linked list */
-		alias_node = alias_node->next;
+		node = node->next;
 	}
 
 	/**
@@ -137,7 +137,7 @@ int _myunsetenv(info_t *inform)
  */
 int populate_env_list(info_t *inform)
 {
-	list_t *alias_node = NULL;
+	list_t *node = NULL;
 	size_t o;
 
 	/*
@@ -145,13 +145,13 @@ int populate_env_list(info_t *inform)
 	 *	variable to the linked list.
 	 */
 	for (o = 0; environ[o]; o++)
-		add_node_end(&alias_node, environ[o], 0);
+		add_node_end(&node, environ[o], 0);
 
 	/*
 	 * Set the 'env' field in the inform structure to the populated
 	 *	linked list.
 	 * Return 0 on success.
 	 */
-	inform->env = alias_node;
+	inform->env = node;
 	return (0);
 } /* End of populate_env_list function */
