@@ -16,45 +16,38 @@
  */
 int hsh(info_t *inform, char **avec)
 {
-ssize_t readResult = 0;
-int builtinResult = 0;
+  ssize_t readResult = 0;
+  int builtinResult = 0;
 
-while (readResult != -1 && builtinResult != -2)
-{
-clear_info(inform);
-
-if (interactive(inform))
-_puts("$ ");
-
+  while (readResult != -1 && builtinResult != -2)
+  {
+    clear_info(inform);
+    if (interactive(inform))
+      _puts("$ ");
 _eputchar(BUF_FLUSH);
-readResult = get_input(inform);
+  readResult = get_input(inform);
+    if (readResult != -1)
+    {
+      set_info(inform, avec);
+      builtinResult = find_builtin(inform);
+      if (builtinResult == -1)
+        find_cmd(inform);
+    }
+    else if (interactive(inform))
+      _putchar('\n');
 
-if (readResult != -1)
-{
-set_info(inform, avec);
-builtinResult = find_builtin(inform);
+    free_info(inform, 0);
+  }
 
-if (builtinResult == -1)
-find_cmd(inform);
-}
-else if (interactive(inform))
-_putchar('\n');
-
-free_info(inform, 0);
-}
-
-write_history(inform);
-free_info(inform, 1);
-
-if (!interactive(inform) && inform->status)
-exit(inform->status);
-
-if (builtinResult == -2)
-{
-if (inform->err_num == -1)
-exit(inform->status);
-
-exit(inform->err_num);
+  write_history(inform);
+  free_info(inform, 1);
+  if (!interactive(inform) && inform->status)
+    exit(inform->status);
+  if (builtinResult == -2)
+  {
+    if (inform->err_num == -1)
+      exit(inform->status);
+    exit(inform->err_num);
 }
 
 return (builtinResult);
@@ -73,30 +66,30 @@ return (builtinResult);
 */
 int find_builtin(info_t *inform)
 {
-int index, built_in_ret = -1;
-builtin_table builtintbl[] = {
-{"exit", _myexit},
-{"env", _myenv},
-{"help", _myhelp},
-{"history", _myhistory},
-{"setenv", _mysetenv},
-{"unsetenv", _myunsetenv},
-{"cd", _mycd},
-{"alias", _myalias},
-{NULL, NULL}
+  int index, built_in_ret = -1;
+  builtin_table builtintbl[] = {
+  {"exit", _myexit},
+  {"env", _myenv},
+  {"help", _myhelp},
+  {"history", _myhistory},
+  {"setenv", _mysetenv},
+  {"unsetenv", _myunsetenv},
+  {"cd", _mycd},
+  {"alias", _myalias},
+  {NULL, NULL}
 };
 
-for (index = 0; builtintbl[index].type; index++)
-{
-if (_strcmp(inform->argv[0], builtintbl[index].type) == 0)
-{
-inform->line_count++;
-built_in_ret = builtintbl[index].func(inform);
-break;
-}
-}
+  for (index = 0; builtintbl[index].type; index++)
+  {
+    if (_strcmp(inform->argv[0], builtintbl[index].type) == 0)
+    {
+      inform->line_count++;
+      built_in_ret = builtintbl[index].func(inform);
+      break;
+    }
+  }
 
-return (built_in_ret);
+  return (built_in_ret);
 }
 
 /**
@@ -112,46 +105,41 @@ return (built_in_ret);
 */
 void find_cmd(info_t *inform)
 {
-char *path = NULL;
-int argument_count;
-int index;
+  char *path = NULL;
+  int argument_count;
+  int index;
 
-inform->path = inform->argv[0];
+  inform->path = inform->argv[0];
+  if (inform->linecount_flag == 1)
+  {
+    inform->line_count++;
+    inform->linecount_flag = 0;
+  }
 
-if (inform->linecount_flag == 1)
-{
-inform->line_count++;
-inform->linecount_flag = 0;
-}
+  for ( index = 0, argument_count = 0; inform->arg[index]; index++)
+    if (!is_delim(inform->arg[index], " \t\n"))
+      argument_count++;
 
-for ( index = 0, argument_count = 0; inform->arg[index]; index++)
-{
-if (!is_delim(inform->arg[index], " \t\n"))
-argument_count++;
-}
+  if (!argument_count)
+    return;
 
-if (!argument_count)
-return;
-
-path = find_path(inform, _getenv(inform, "PATH="), inform->argv[0]);
-
-if (path)
-{
-inform->path = path;
-fork_cmd(inform);
-}
-else
-{
-if ((interactive(inform) || _getenv(inform, "PATH=") || inform->argv[0][0] == '/') &&
-is_cmd(inform, inform->argv[0]))
-fork_cmd(inform);
-
-else if (*(inform->arg) != '\n')
-{
-inform->status = 127;
-print_error(inform, "not found\n");
-}
-}
+  path = find_path(inform, _getenv(inform, "PATH="), inform->argv[0]);
+  if (path)
+  {
+    inform->path = path;
+    fork_cmd(inform);
+  }
+  else
+  {
+    if ((interactive(inform) || _getenv(inform, "PATH=") || inform->argv[0][0] == '/') &&
+      is_cmd(inform, inform->argv[0]))
+      fork_cmd(inform);
+    else if (*(inform->arg) != '\n')
+    {
+      inform->status = 127;
+      print_error(inform, "not found\n");
+    }
+  }
 }
 
 /**
@@ -166,40 +154,35 @@ print_error(inform, "not found\n");
 */
 void fork_cmd(info_t *info)
 {
-pid_t child_process_id;
+  pid_t child_process_id;
 
-child_process_id = fork();
-
-if (child_process_id == -1)
-{
+  child_process_id = fork();
+  if (child_process_id == -1)
+  {
 /* TODO: Implement error handling function */
-perror("Error:");
-return;
-}
+    perror("Error:");
+    return;
+  }
 
-if (child_process_id == 0)
-{
-if (execve(info->path, info->argv, get_environ(info)) == -1)
-{
-free_info(info, 1);
-
-if (errno == EACCES)
-exit(126);
-
-exit(1);
-}
-/* TODO: Implement error handling function */
-}
-else
-{
-wait(&(info->status));
-
-if (WIFEXITED(info->status))
-{
-info->status = WEXITSTATUS(info->status);
-
-if (info->status == 126)
-print_error(info, "Permission denied\n");
-}
-}
+  if (child_process_id == 0)
+  {
+    if (execve(info->path, info->argv, get_environ(info)) == -1)
+    {
+      free_info(info, 1);
+      if (errno == EACCES)
+        exit(126);
+      exit(1);
+    }
+    /* TODO: Implement error handling function */
+  }
+  else
+  {
+    wait(&(info->status));
+    if (WIFEXITED(info->status))ç
+    {
+      info->status = WEXITSTATUS(info->status);
+      if (info->status == 126)
+        print_error(info, "Permission denied\n");
+    }
+  }
 }
