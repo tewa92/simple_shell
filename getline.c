@@ -135,7 +135,7 @@ int _getline(info_t *inform, char **potr, size_t *leng)
 	static char buf[READ_BUF_SIZE];
 	static size_t m, len;
 	size_t c;
-	ssize_t read, h;
+	ssize_t read = 0, h = 0;
 	char *nd = NULL, *new_d = NULL, *end;
 
 	nd = *potr;
