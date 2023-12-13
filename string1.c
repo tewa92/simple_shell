@@ -12,17 +12,17 @@
  */
 char *_strcpy(char *destination, char *source)
 {
-int index = 0;
+  int index = 0;
 
-if (destination == source || source == 0)
-return (destination);
-while (source[index])
-{
-destination[index] = source[index];
-index++;
-}
-destination[index] = 0;
-return (destination);
+  if (destination == source || source == 0)
+    return (destination);
+  while (source[index])
+  {
+    destination[index] = source[index];
+    index++;
+  }
+  destination[index] = 0;
+  return (destination);
 }
 
 /**
@@ -36,23 +36,19 @@ return (destination);
  */
 char *_strdup(const char *input_str)
 {
-int str_length = 0;
-char *result;
+  int str_length = 0;
+  char *result;
 
-if (input_str == NULL)
-return (NULL);
-
-while (*input_str++)
-str_length++;
-
-result = malloc(sizeof(char) * (str_length + 1));
-if (!result)
-return (NULL);
-
-for (str_length++; str_length--;)
-result[str_length] = *--input_str;
-
-return (result);
+  if (input_str == NULL)
+    return (NULL);
+  while (*input_str++)
+    str_length++;
+  result = malloc(sizeof(char) * (str_length + 1));
+  if (!result)
+    return (NULL);
+  for (str_length++; str_length--;)
+    result[str_length] = *--input_str;
+  return (result);
 }
 
 
@@ -64,16 +60,15 @@ return (result);
  */
 void _puts(char *output_string)
 {
-int index = 0;
+  int index = 0;
 
-if (!output_string)
-return;
-
-while (output_string[index] != '\0')
-{
-_putchar(output_string[index]);
-index++;
-}
+  if (!output_string)
+    return;
+  while (output_string[index] != '\0')
+  {
+    _putchar(output_string[index]);
+    index++;
+  }
 }
 
 
@@ -89,17 +84,16 @@ index++;
  */
 int _putchar(char character)
 {
-static int buffer_index;
-static char buffer[WRITE_BUF_SIZE];
+  static int buffer_index;
+  static char buffer[WRITE_BUF_SIZE];
 
-if (character == BUF_FLUSH || buffer_index >= WRITE_BUF_SIZE)
-{
-write(1, buffer, buffer_index);
-buffer_index = 0;
-}
+  if (character == BUF_FLUSH || buffer_index >= WRITE_BUF_SIZE)
+  {
+    write(1, buffer, buffer_index);
+    buffer_index = 0;
+  }
 
-if (character != BUF_FLUSH)
-buffer[buffer_index++] = character;
-
-return (1);
+  if (character != BUF_FLUSH)
+    buffer[buffer_index++] = character;
+  return (1);
 }
