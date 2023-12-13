@@ -31,7 +31,7 @@ char **get_environ(info_t *inform)
 */
 int _unsetenv(info_t *inform, char *vari)
 {
-	list_t *alias_node = inform->env;
+	list_t *node = inform->env;
 	size_t o = 0;
 	char *h;
 
@@ -39,7 +39,7 @@ int _unsetenv(info_t *inform, char *vari)
 	* Return 0 if the linked list of environment variables or the
 	* variable name is not present.
 	*/
-	if (!alias_node || !vari)
+	if (!node || !vari)
 		return (0);
 
 	/**
@@ -47,17 +47,17 @@ int _unsetenv(info_t *inform, char *vari)
 	* If a variable with the specified name is found, remove it from the list.
 	* Update the environment change flag accordingly.
 	*/
-	while (alias_node)
+	while (node)
 	{
-		h = starts_with(alias_node->str, vari);
+		h = starts_with(node->str, vari);
 		if (h && *h == '=')
 		{
 			inform->env_changed = delete_node_at_index(&(inform->env), o);
 			o = 0;
-			alias_node = inform->env;
+			node = inform->env;
 			continue;
 		}
-		alias_node = alias_node->next;
+		node = node->next;
 		o++;
 	}
 
@@ -79,7 +79,7 @@ int _unsetenv(info_t *inform, char *vari)
 int _setenv(info_t *inform, char *vari, char *amount)
 {
 	char *buff = NULL;
-	list_t *alias_node;
+	list_t *node;
 	char *b;
 
 	/* Return 1 if the variable name or value is not present. */
@@ -97,19 +97,19 @@ int _setenv(info_t *inform, char *vari, char *amount)
 	_strcat(buff, amount);
 
 	/* Iterate through the linked list of environment variables. */
-	alias_node = inform->env;
-	while (alias_node)
+	node = inform->env;
+	while (node)
 	{
-		b = starts_with(alias_node->str, vari);
+		b = starts_with(node->str, vari);
 		if (b && *b == '=')
 		{
 			/* If the variable already exists, update its value. */
-			free(alias_node->str);
-			alias_node->str = buff;
+			free(node->str);
+			node->str = buff;
 			inform->env_changed = 1;
 			return (0);
 		}
-		alias_node = alias_node->next;
+		node = node->next;
 	}
 
 	/* If the variable does not exist, add it to the end of the list. */
