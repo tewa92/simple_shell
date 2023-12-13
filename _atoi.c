@@ -26,15 +26,15 @@ int interactive(info_t *inform)
  * @delimit: Pointer to a string containing delimiter characters.
  * Return: 1 if the character is a delimiter, 0 otherwise.
  */
-int is_delim(char k, char *delimit)
+int is_delim(char k, char *delim)
 {
     /* Iterate through the delimiter string */
-	while (*delimit)
+	while (*delim)
 	/**
 	 * Check if the current character in the delimiter
 	 * string matches the given character
 	 */
-		if (*delimit++ == k)
+		if (*delim++ == k)
 		return (1);
 
     /* If the character is not found in the delimiter string, return 0 */
@@ -45,7 +45,7 @@ int is_delim(char k, char *delimit)
 /**
  * _isalpha - Function Checks if a given character is an alphabetic character.
  * @l: The character to be checked.
- * Return: 1 if the character is an alphabetic character, 0 otherwise.
+ * Return: 1 if the character is alphabetic, 0 otherwise.
  */
 int _isalpha(int l)
 {
@@ -62,10 +62,10 @@ int _isalpha(int l)
 
 /**
  * _atoi - Function Converts a string of digits to an integer.
- * @st: The input string to be converted.
+ * @s: The input string to be converted.
  * Return: the converted integer value.
  */
-int _atoi(char *st)
+int _atoi(char *s)
 {
     /* Initialize variables */
 	int e, sign = 1, flag = 0, output;
@@ -75,18 +75,18 @@ int _atoi(char *st)
      * Iterate through the characters in the input string until
      * a null character or flag equals 2
      */
-	for (e = 0; st[e] != '\0' && flag != 2; e++)
+	for (e = 0; s[e] != '\0' && flag != 2; e++)
 	{
 	/* Check for the sign of the number */
-		if (st[e] == '-')
+		if (s[e] == '-')
 			sign *= -1;
 
 	/* Check if the character is a digit */
-		if (st[e] >= '0' && st[e] <= '9')
+		if (s[e] >= '0' && s[e] <= '9')
 		{
 			flag = 1;
 			result *= 10;
-			result += (st[e] - '0');
+			result += (s[e] - '0');
 		}
 		else if (flag == 1)
 			flag = 2;
