@@ -23,7 +23,7 @@ int interactive(info_t *inform)
  * is_delim - Function Checks if a given character is a delimiter
  *	by comparing it to a set of delimiter characters.
  * @k: The character to be checked.
- * @delimit: Pointer to a string containing delimiter characters.
+ * @delim: Pointer to a string containing delimiter characters.
  * Return: 1 if the character is a delimiter, 0 otherwise.
  */
 int is_delim(char k, char *delim)

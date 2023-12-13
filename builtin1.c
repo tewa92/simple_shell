@@ -79,7 +79,7 @@ int set_alias(info_t *inform, char *str)
 	k = _strchr(str, '=');
 
 	/* If '=' is not found, return 1 (failure) */
-	if (!p)
+	if (!k)
 		return (1);
 	/**If the character immediately after '=' is null, unset the alias*/
 
@@ -97,7 +97,7 @@ int set_alias(info_t *inform, char *str)
 /**
  * print_alias - Function Prints the contents of an alias
  *	node in the specified format.
- * @alias_node: Pointer to a node in the alias linked list
+ * @node: Pointer to a node in the alias linked list
  *	(Assuming it's a linked list of aliases).
  * Return: 0 on success, 1 if the node is NULL.
  */

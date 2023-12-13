@@ -71,7 +71,8 @@ ssize_t get_input(info_t *inform)
 		current_index = chain_index;
 		command_position = chain_buffer + chain_index; /* Get pointer for return */
 
-		check_chain(inform, chain_buffer, &current_index, chain_index, buffer_length);
+		check_chain(inform, chain_buffer, &current_index,
+				chain_index, buffer_length);
 		while (current_index < buffer_length) /* Iterate to semicolon or end */
 		{
 			if (is_chain(inform, chain_buffer, &current_index))

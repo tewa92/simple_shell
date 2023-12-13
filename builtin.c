@@ -82,7 +82,7 @@ int _mycd(info_t *inform)
 		if (!_getenv(inform, "OLDPWD="))
 		{
 			_puts(s);
-			_putschar('\n');
+			_putchar('\n');
 		return (1);
 	}
 

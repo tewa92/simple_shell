@@ -15,12 +15,12 @@
  */
 char *_memset(char *dest, char byte, unsigned int count)
 {
-  unsigned int index;
+	unsigned int index;
 
-  for (index = 0; index < count; index++)
-    dest[index] = byte;
+	for (index = 0; index < count; index++)
+		dest[index] = byte;
 
-  return (dest);
+	return (dest);
 }
 
 
@@ -33,15 +33,14 @@ char *_memset(char *dest, char byte, unsigned int count)
  */
 void ffree(char **str_arr)
 {
-  char **temp = str_arr;
+	char **temp = str_arr;
 
-  if (!str_arr)
-    return;
+	if (!str_arr)
+		return;
+	while (*str_arr)
+		free(*str_arr++);
 
-  while (*str_arr)
-    free(*str_arr++);
-
-  free(temp);
+	free(temp);
 }
 
 /**
@@ -63,25 +62,24 @@ void ffree(char **str_arr)
  */
 void *_realloc(void *oldBlock, unsigned int oldSize, unsigned int newSize)
 {
-  char *newBlock;
+	char *newBlock;
 
-  if (!oldBlock)
-    return (malloc(newSize));
+	if (!oldBlock)
+		return (malloc(newSize));
 
-  if (!newSize)
-    return (free(oldBlock), NULL);
+	if (!newSize)
+		return (free(oldBlock), NULL);
 
-  if (newSize == oldSize)
-    return (oldBlock);
+	if (newSize == oldSize)
+		return (oldBlock);
 
-  newBlock = malloc(newSize);
-  if (!newBlock)
-    return (NULL);
+	newBlock = malloc(newSize);
+	if (!newBlock)
+		return (NULL);
 
-  oldSize = oldSize < newSize ? oldSize : newSize;
-  while (oldSize--)
-    newBlock[oldSize] = ((char *)oldBlock)[oldSize];
-
-  free(oldBlock);
-  return (newBlock);
+	oldSize = oldSize < newSize ? oldSize : newSize;
+	while (oldSize--)
+		newBlock[oldSize] = ((char *)oldBlock)[oldSize];
+	free(oldBlock);
+	return (newBlock);
 }

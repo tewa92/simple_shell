@@ -54,7 +54,7 @@ void set_info(info_t *inform, char **avec)
 /**
 * free_info - Frees memory allocated for information structure members.
 * @inform: Pointer to the information structure.
-* @whole: Flag indicating whether to free all associated memory.
+* @all: Flag indicating whether to free all associated memory.
 */
 void free_info(info_t *inform, int all)
 {
