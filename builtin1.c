@@ -73,17 +73,17 @@ int unset_alias(info_t *inform, char *str)
  */
 int set_alias(info_t *inform, char *str)
 {
-	char *equal_sign_position;
+	char *k;
 
 	/* Find the position of '=' in the alias */
-	equal_sign_position = _strchr(str, '=');
+	k = _strchr(str, '=');
 
 	/* If '=' is not found, return 1 (failure) */
-	if (!equal_sign_position)
+	if (!p)
 		return (1);
-	/**If the character immediately after '=' is null, unset thealias*/
+	/**If the character immediately after '=' is null, unset the alias*/
 
-	if (!*++equal_sign_position)
+	if (!*++k)
 		return (unset_alias(inform, str));
 	unset_alias(inform, str);
 
@@ -101,25 +101,25 @@ int set_alias(info_t *inform, char *str)
  *	(Assuming it's a linked list of aliases).
  * Return: 0 on success, 1 if the node is NULL.
  */
-int print_alias(list_t *alias_node)
+int print_alias(list_t *node)
 {
-	char *equal_sign_position = NULL, *iterator = NULL;
+	char *k = NULL, *i = NULL;
 
 	/* Check if the alias_node is not NULL */
-	if (alias_node)
+	if (node)
 	{
 		/* Find the position of '=' in the alias */
-		equal_sign_position = _strchr(alias_node->str, '=');
+		k = _strchr(node->str, '=');
 
 		/* Loop through the characters in the alias up to and including '=' */
-		for (iterator = alias_node->str; iterator <= equal_sign_position; iterator++)
-			_putchar(*iterator);
+		for (i = node->str; i <= k; i++)
+			_putchar(*i);
 
 		/* Print a single quote after the '=' */
 		_putchar('\'');
 
 		/* Print the characters after '=' */
-		_puts(equal_sign_position + 1);
+		_puts(k + 1);
 
 		/* Print a newline character */
 		_puts("'\n");
@@ -143,17 +143,17 @@ int print_alias(list_t *alias_node)
 int _myalias(info_t *inform)
 {
 	int k = 0;
-	char *equal_sign_position = NULL;
-	list_t *alias_node = NULL;
+	char *e = NULL;
+	list_t *node = NULL;
 
 	/* If 'alias' command is used without arguments, print all aliases */
 	if (inform->argc == 1)
 	{
-		alias_node = inform->alias;
-		while (alias_node)
+		node = inform->alias;
+		while (node)
 		{
-			print_alias(alias_node);
-			alias_node = alias_node->next;
+			print_alias(node);
+			node = node->next;
 		}
 		return (0);
 	}
@@ -162,10 +162,10 @@ int _myalias(info_t *inform)
 	for (k = 1; inform->argv[k]; k++)
 	{
 		/* Find the position of '=' in the argument */
-		equal_sign_position = _strchr(inform->argv[k], '=');
+		e = _strchr(inform->argv[k], '=');
 
 		/* If '=' is found, set the alias */
-		if (equal_sign_position)
+		if (e)
 			set_alias(inform, inform->argv[k]);
 
 		/* If '=' is not found, print the aliases that match the prefix */
